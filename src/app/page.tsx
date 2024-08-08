@@ -13,7 +13,7 @@ export default function Home() {
             Trackers
           </h1>
           <p className={styles.subtext}>
-            You're making progress.
+            You&apos;re making progress.
           </p>
         </div>
         <div className={`${styles.row} ${styles.content}`} style={{marginTop: '48px'}}>
