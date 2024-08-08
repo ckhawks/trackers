@@ -1,13 +1,13 @@
 "use server";
 
 import styles from "../page.module.scss";
-import { getSession, logout } from "@/auth/lib";
-import LoginComponent from "./LoginComponent";
+import { getSession } from "@/auth/lib";
+import RegisterComponent from "./RegisterComponent";
+import { redirect } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { redirect } from "next/navigation";
 
-export default async function LoginPage() {
+export default async function RegisterPage() {
   const session = await getSession();
   console.log("session", session);
 
@@ -34,7 +34,7 @@ export default async function LoginPage() {
           </div>
           
     <section>
-      {!session && <LoginComponent />}
+    {!session && <RegisterComponent />}
 
       {/* {session && (
         <form action={logout}>
@@ -44,6 +44,7 @@ export default async function LoginPage() {
 
       <pre>Session: {JSON.stringify(session, null, 2)}</pre>
     </section>
-    </main></div>
+    </main>
+    </div>
   );
 }

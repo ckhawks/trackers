@@ -5,12 +5,21 @@ import AddTrackerButton from "../components/AddTrackerButton";
 import Link from "next/link";
 
 import { sql } from "@vercel/postgres";
+import { getSession } from "@/auth/lib";
+import { redirect } from "next/navigation";
+import { Col, Row } from "react-bootstrap";
+import ProfileButton from "@/components/ProfileButton";
 
 export default async function Home() {
-  const userId = "7e497089-9dfe-49b6-9823-0e2e05ca3e30";
+  const session = await getSession();
+  console.log("session", session);
+
+  if (!session) {
+    redirect("/login");
+  }
 
   const query = 'SELECT * FROM "Tracker" WHERE userid = $1';
-  const params = [userId];
+  const params = [session.user.id];
   const { rows: trackers } = await sql.query(query, params);
 
   // const { rows: trackers } = await sql`SELECT * FROM "Tracker" `; // WHERE "userid"=${userId}
@@ -20,8 +29,21 @@ export default async function Home() {
     <div className={styles.wrapper}>
       <main className={styles.main}>
         <div className={styles.description}>
+          <Row style={{alignItems: 'center'}}>
+          <Col>
           <h1>Trackers</h1>
-          <p className={styles.subtext}>You&apos;re making progress.</p>
+          <p className={styles.subtext}>
+            You&apos;re making progress,
+            <span style={{color: "rgba(0,0,0,.8)", fontWeight: 600}}>
+              {" "}{session.user.username}
+            </span>!
+          </p>
+          </Col>
+          <Col xs={3}>
+            <ProfileButton username={session.user.username}/>
+            
+          </Col>
+          </Row>
         </div>
         <div
           className={`${styles.row} ${styles.content}`}

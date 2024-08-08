@@ -35,7 +35,7 @@ function AddTrackerButton() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" type="submit" onClick={handleClose}>
             Add
           </Button>
         </Modal.Footer>
