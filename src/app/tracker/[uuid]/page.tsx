@@ -30,20 +30,24 @@ export default async function Tracker({ params }: { params: { uuid: string } }) 
 
 
 
-  const query = `SELECT
-    t.*,
-    SUM(pe.points) as points
+  const query = `
+    SELECT
+      t.*,
+      COALESCE(SUM(pe.points), 0) as points
     FROM "Tracker" t
     LEFT JOIN "Progress" p
-    ON p."trackerid" = t.id
-    LEFT JOIN "ProgressEvent" pe ON pe."progressid" = p.id
-    WHERE pe.id IN (
-      SELECT MAX(id) FROM "ProgressEvent"
-      GROUP BY "progressid" 
-    )
-    AND t.userid = $1
+    ON p."trackerid" = t.id AND p."deletedat" is NULL
+    LEFT JOIN (
+      SELECT "progressid", points
+      FROM "ProgressEvent" 
+      WHERE id IN (
+        SELECT MAX(id)
+        FROM "ProgressEvent"
+        GROUP BY "progressid" 
+      )
+    ) pe ON pe."progressid" = p.id
+    WHERE t.userid = $1
     AND t.id = $2
-    AND p."deletedat" is NULL
     GROUP BY t."id"`;
   // const query = `
   //   SELECT 
@@ -92,7 +96,7 @@ export default async function Tracker({ params }: { params: { uuid: string } }) 
       <main className={styles["main-centered"]}>
         <h1>{tracker.name}</h1>
 
-        <p className={styles.subtext}>{tracker.points} point{tracker.points > 1 && "s"}{/* — 2 days ago*/}</p>
+        <p className={styles.subtext}>{tracker.points} point{tracker.points != 1 && "s"}{/* — 2 days ago*/}</p>
 
         <AddProgressButton trackerId={tracker.id} userId={session.user.id}/>
         <div className={styles.description}></div>
@@ -107,7 +111,7 @@ export default async function Tracker({ params }: { params: { uuid: string } }) 
           progresses.map((progress) => {
             const tooltip = (
               <Tooltip id="tooltip" key={progress.id}>
-                <strong>{progress.points} point{progress.points > 1 && "s"}</strong>
+                <strong>{progress.points} point{progress.points != 1 && "s"}</strong>
                 <br />
                 { progress.summary && <>
                     {progress.summary}
