@@ -6,7 +6,6 @@ import Link from "next/link";
 
 import { sql } from "@vercel/postgres";
 import { getSession } from "@/auth/lib";
-import { redirect } from "next/navigation";
 import { Col, Row } from "react-bootstrap";
 import ProfileButton from "@/components/ProfileButton";
 
@@ -192,8 +191,8 @@ export default async function Home() {
             <br />
             <br />
             <span style={{ color: "rgba(0,0,0,.5)" }}>
-              Credit my therapist for the initial idea the application was built
-              around.
+              Credit to my therapist for the initial idea the application was
+              built around.
             </span>
             {/* {session && (
         <form action={logout}>
