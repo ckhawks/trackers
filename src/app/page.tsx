@@ -19,19 +19,27 @@ export default async function Home() {
   }
 
 
-  const query = `SELECT
-    t.*,
-    SUM(pe.points) as points
+  // const query = `
+  //   SELECT * FROM "Tracker" t
+  //   WHERE t.userid = $1;
+  // `;
+  const query = `
+    SELECT
+      t.*,
+      COALESCE(SUM(pe.points), 0) as points
     FROM "Tracker" t
     LEFT JOIN "Progress" p
-    ON p."trackerid" = t.id
-    LEFT JOIN "ProgressEvent" pe ON pe."progressid" = p.id
-    WHERE pe.id IN (
-      SELECT MAX(id) FROM "ProgressEvent"
-      GROUP BY "progressid" 
-    )
-    AND t.userid = $1
-    AND p."deletedat" is NULL
+    ON p."trackerid" = t.id AND p."deletedat" is NULL
+    LEFT JOIN (
+      SELECT "progressid", points
+      FROM "ProgressEvent" 
+      WHERE id IN (
+        SELECT MAX(id)
+        FROM "ProgressEvent"
+        GROUP BY "progressid" 
+      )
+    ) pe ON pe."progressid" = p.id
+    WHERE t.userid = $1
     GROUP BY t."id"`;
   const params = [session.user.id];
   const { rows: trackers } = await sql.query(query, params);

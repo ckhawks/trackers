@@ -27,7 +27,7 @@ export default function LoginComponent() {
         <Form.Label>Email address</Form.Label>
         <Form.Control type="email" name="email" placeholder=""  />
       </Form.Group>
-      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+      <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
         <Form.Label>Password</Form.Label>
         <Form.Control type="password" name="password" placeholder=""  />
       </Form.Group>

@@ -42,7 +42,7 @@ export default async function RegisterPage() {
         </form>
       )} */}
 
-      <pre>Session: {JSON.stringify(session, null, 2)}</pre>
+      {/* <pre>Session: {JSON.stringify(session, null, 2)}</pre> */}
     </section>
     </main>
     </div>
