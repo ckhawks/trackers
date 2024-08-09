@@ -6,6 +6,7 @@ import LoginComponent from "./LoginComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 export default async function LoginPage() {
   const session = await getSession();
@@ -19,14 +20,16 @@ export default async function LoginPage() {
     <div className={styles.wrapper}>
       <main className={`${styles.main} ${styles.narrow}`}>
         <div className={styles.description}>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <FontAwesomeIcon
-              icon={faHeart}
-              style={{ color: "#E26F6F", fontSize: "2rem" }}
-            />
-          </div>
+          <Link href="/">
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <FontAwesomeIcon
+                icon={faHeart}
+                style={{ color: "#E26F6F", fontSize: "2rem" }}
+              />
+            </div>
 
-          <h1>Trackers</h1>
+            <h1>Trackers</h1>
+          </Link>
           <p className={styles.subtext}>
             You&apos;re making progress; track it!
           </p>
