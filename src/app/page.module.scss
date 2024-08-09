@@ -55,6 +55,9 @@
 .tracker-cards {
   max-width: 1200px;
   gap: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .button {
