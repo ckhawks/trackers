@@ -13,7 +13,7 @@ const ProfileButton = (props: {username: string}) => {
     const [target, setTarget] = useState(null);
     const ref = useRef(null);
   
-    const handleProfileClick = (event) => {
+    const handleProfileClick = (event: any) => {
       setShow(!show);
       setTarget(event.target);
     };
