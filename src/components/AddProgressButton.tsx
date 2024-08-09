@@ -1,16 +1,30 @@
 "use client";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "@/app/page.module.scss";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Button, Col, Form, InputGroup, Modal, Row } from "react-bootstrap";
+import { Alert, Button, Col, Form, InputGroup, Modal, Row } from "react-bootstrap";
+import { addProgressToTracker } from "@/app/api/progress/actions";
+import { useFormState } from "react-dom";
 
-function AddProgressButton() {
+const initialState = {
+  message: "",
+};
+
+function AddProgressButton(props: {trackerId: string, userId: string}) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const [state, addProgressToTrackerAction] = useFormState(addProgressToTracker, initialState);
+
+  useEffect(() => {
+    if(state?.state === "success") {
+      setShow(false);
+    }
+  }, [state]);
 
   return (
     <>
@@ -22,10 +36,20 @@ function AddProgressButton() {
         <FontAwesomeIcon icon={faPlus} /> Add progress
       </div>
       <Modal show={show} onHide={handleClose} centered>
+        <Form action={addProgressToTrackerAction}>
         <Modal.Header closeButton>
           <Modal.Title>Add progress</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+        {state?.message && (
+            <p aria-live="polite">
+              <Alert variant='danger' style={{fontSize: '0.9rem'}}>
+                {state?.message}
+              </Alert>
+            </p>
+          )}
+          <input style={{display: 'none' }} type="hidden" id="progress-trackerId" name="progress-trackerId" value={props.trackerId}></input>
+          <input style={{display: 'none' }} type="hidden" id="progress-userid" name="progress-userid" value={props.userId}></input>
           <Row className="align-items-center">
             <Col xs="auto">
               <Form.Label htmlFor="progress-points">Points</Form.Label>
@@ -33,27 +57,27 @@ function AddProgressButton() {
                 <Form.Control
                   type="number"
                   id="progress-points"
-                  aria-describedby="basic-addon3"
+                  name="progress-points"
                   style={{ maxWidth: "100px" }}
                 />
               </InputGroup>
             </Col>
-            <Col xs="auto">
-              <Form.Label htmlFor="progress-points">Date</Form.Label>
+            {/* <Col xs="auto">
+              <Form.Label htmlFor="progress-date">Date</Form.Label>
               <InputGroup className="mb-3">
                 <Form.Control
                   type="date"
-                  id="progress-points"
-                  aria-describedby="basic-addon3"
+                  id="progress-date"
+                  name="progress-date"
                 />
               </InputGroup>
-            </Col>
+            </Col> */}
           </Row>
           <Form.Label htmlFor="progress-summary">Summary</Form.Label>
           <InputGroup className="mb-3">
             <Form.Control
               id="progress-summary"
-              aria-describedby="basic-addon3"
+              name="progress-summary"
             />
           </InputGroup>
         </Modal.Body>
@@ -61,10 +85,11 @@ function AddProgressButton() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" type="submit">
             Add
           </Button>
         </Modal.Footer>
+        </Form>
       </Modal>
     </>
   );

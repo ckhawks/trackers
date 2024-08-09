@@ -116,4 +116,17 @@
   }
 }
 
+.progress-section {
+  width: 200px;
+}
 
+.progress-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  & > *:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+}

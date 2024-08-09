@@ -18,7 +18,21 @@ export default async function Home() {
     redirect("/login");
   }
 
-  const query = 'SELECT * FROM "Tracker" WHERE userid = $1';
+
+  const query = `SELECT
+    t.*,
+    SUM(pe.points) as points
+    FROM "Tracker" t
+    LEFT JOIN "Progress" p
+    ON p."trackerid" = t.id
+    LEFT JOIN "ProgressEvent" pe ON pe."progressid" = p.id
+    WHERE pe.id IN (
+      SELECT MAX(id) FROM "ProgressEvent"
+      GROUP BY "progressid" 
+    )
+    AND t.userid = $1
+    AND p."deletedat" is NULL
+    GROUP BY t."id"`;
   const params = [session.user.id];
   const { rows: trackers } = await sql.query(query, params);
 
@@ -64,7 +78,7 @@ export default async function Home() {
                 <div className={styles["tracker-card-content"]}>
                   <div style={{ fontWeight: 600 }}>{tracker.name}</div>
                   <div style={{}} className={styles["subtext"]}>
-                    1032 — 2 days ago
+                    {tracker.points} {/*— 2 days ago */}
                   </div>
                 </div>
                 <FontAwesomeIcon
