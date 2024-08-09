@@ -18,7 +18,6 @@ export default async function Home() {
     redirect("/login");
   }
 
-
   // const query = `
   //   SELECT * FROM "Tracker" t
   //   WHERE t.userid = $1;
@@ -44,6 +43,17 @@ export default async function Home() {
   const params = [session.user.id];
   const { rows: trackers } = await sql.query(query, params);
 
+  const focusedTrackers = [];
+  const backburnerTrackers = [];
+
+  for (let tracker of trackers) {
+    if (tracker.focus) {
+      focusedTrackers.push(tracker);
+    } else {
+      backburnerTrackers.push(tracker);
+    }
+  }
+
   // const { rows: trackers } = await sql`SELECT * FROM "Tracker" `; // WHERE "userid"=${userId}
   // for some reason the line above doesn't work with the uuid parameter
 
@@ -51,31 +61,33 @@ export default async function Home() {
     <div className={styles.wrapper}>
       <main className={styles.main}>
         <div className={styles.description}>
-          <Row style={{alignItems: 'center'}}>
-          <Col>
-          <h1>Trackers</h1>
-          <p className={styles.subtext}>
-            You&apos;re making progress,
-            <span style={{color: "rgba(0,0,0,.8)", fontWeight: 600}}>
-              {" "}{session.user.username}
-            </span>!
-          </p>
-          </Col>
-          <Col xs={3}>
-            <ProfileButton username={session.user.username}/>
-            
-          </Col>
+          <Row style={{ alignItems: "center" }}>
+            <Col>
+              <h1>Trackers</h1>
+              <p className={styles.subtext}>
+                You&apos;re making progress,
+                <span style={{ color: "rgba(0,0,0,.8)", fontWeight: 600 }}>
+                  {" "}
+                  {session.user.username}
+                </span>
+                !
+              </p>
+            </Col>
+            <Col xs={3}>
+              <ProfileButton username={session.user.username} />
+            </Col>
           </Row>
         </div>
         <div
           className={`${styles.row} ${styles.content}`}
           style={{ marginTop: "48px" }}
         >
-          <h2>Your trackers</h2>
+          <h3>Your trackers</h3>
           <AddTrackerButton />
         </div>
+        <p>Focus</p>
         <div className={styles["tracker-cards"]}>
-          {trackers.map((tracker) => (
+          {focusedTrackers.map((tracker) => (
             <Link
               href={"/tracker/" + tracker.id}
               passHref
@@ -83,6 +95,32 @@ export default async function Home() {
               key={tracker.id}
             >
               <div className={styles["tracker-card"]}>
+                <div className={styles["tracker-card-content"]}>
+                  <div style={{ fontWeight: 600 }}>{tracker.name}</div>
+                  <div style={{}} className={styles["subtext"]}>
+                    {tracker.points} {/*— 2 days ago */}
+                  </div>
+                </div>
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  className={styles["icon-gray"]}
+                />
+              </div>
+            </Link>
+          ))}
+        </div>
+        <p style={{ marginTop: "48px" }}>Backburner</p>
+        <div className={styles["tracker-cards"]}>
+          {backburnerTrackers.map((tracker) => (
+            <Link
+              href={"/tracker/" + tracker.id}
+              passHref
+              legacyBehavior
+              key={tracker.id}
+            >
+              <div
+                className={`${styles["tracker-card"]} ${styles["tracker-card-backburner"]}`}
+              >
                 <div className={styles["tracker-card-content"]}>
                   <div style={{ fontWeight: 600 }}>{tracker.name}</div>
                   <div style={{}} className={styles["subtext"]}>

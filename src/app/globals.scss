@@ -15,7 +15,12 @@ body {
   // align-items: center;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 700 !important;
   line-height: unset;
   margin: unset;
@@ -28,7 +33,14 @@ h1 {
 
 h2 {
   font-size: 24px;
-  
+}
+
+h3 {
+  font-size: 24px;
+}
+
+h4 {
+  font-size: 20px;
 }
 
 body {
@@ -60,7 +72,7 @@ a {
 }
 
 .modal-footer {
-  background-color: rgba(0,0,0,.05);
+  background-color: rgba(0, 0, 0, 0.05);
   justify-content: space-between;
 }
 
@@ -69,45 +81,44 @@ a {
   border: none;
 
   &:hover {
-    background-color: rgba(0,0,0,.9);
+    background-color: rgba(0, 0, 0, 0.9);
   }
 }
 
 .btn-secondary {
   background-color: white;
-  border: 1px solid #EDEDED;
+  border: 1px solid #ededed;
   color: black;
 
   &:hover {
     background-color: black;
     color: white;
-    border: 1px solid #EDEDED;
+    border: 1px solid #ededed;
   }
 }
 
 .form-label {
   font-size: 14px;
-  color: rgba(0,0,0,.8);
+  color: rgba(0, 0, 0, 0.8);
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: 0; 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
 }
 
 .tooltip-inner {
   background-color: white;
-  border: 1px solid #ECECEC;
+  border: 1px solid #ececec;
   color: black;
   text-align: left;
 }
 
 .tooltip-arrow {
   background-color: white;
-  border: 1px solid #ECECEC;
+  border: 1px solid #ececec;
   color: black;
-  
 }

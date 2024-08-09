@@ -1,12 +1,51 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  max-width: 1200px;
+  // max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  padding: 8rem;
+  padding: 4rem;
   // justify-content: center;
   min-height: 70vh;
+
+  // @media only screen and (max-width: 1500px) {
+  //   max-width: calc((285px * 5) + (20px * 4) + 8rem);
+  // }
+
+  // @media only screen and (max-width: 1500px) {
+  //   max-width: calc((285px * 4) + (20px * 3) + 8rem);
+  // }
+
+  @media only screen and (max-width: 400px) {
+    padding: 1rem;
+  }
+
+  // 600px
+  @media only screen and (min-width: 400px) {
+    // change cards to span wide
+    padding: 2rem;
+  }
+
+  @media only screen and (min-width: 660px) {
+    padding: 2rem;
+    max-width: calc((285px * 2) + (20px * 1) + 4rem);
+  }
+
+  // 1030px
+  @media only screen and (min-width: 1030px) {
+    padding: 4rem;
+    max-width: calc((285px * 3) + (20px * 2) + 8rem);
+  }
+
+  @media only screen and (min-width: 1350px) {
+    padding: 4rem;
+    max-width: calc((285px * 4) + (20px * 3) + 8rem);
+  }
+
+  @media only screen and (min-width: 1640px) {
+    padding: 4rem;
+    max-width: calc((285px * 5) + (20px * 4) + 8rem);
+  }
 }
 
 .narrow {
@@ -17,7 +56,7 @@
 }
 
 .subtext {
-  color: rgba(0,0,0,0.5);
+  color: rgba(0, 0, 0, 0.5);
   font-size: 16px;
   margin-top: 4px;
 }
@@ -27,19 +66,20 @@
   flex-direction: row;
   margin: 2rem 0rem;
   justify-content: space-between;
-  align-items: center
+  align-items: center;
 }
 
 .tracker-card {
   padding: 2rem 1.5rem;
   border-radius: 4px;
-  border: 1px solid #ECECEC;
+  border: 1px solid #ececec;
   width: 285px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  transition: border 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transition: border 0.2s ease-in-out, transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
 
   &:hover {
     cursor: pointer;
@@ -50,10 +90,22 @@
       color: black;
     }
   }
+
+  @media only screen and (max-width: 660px) {
+    width: 100%;
+  }
+}
+
+.tracker-card-backburner {
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .tracker-cards {
-  max-width: 1200px;
+  // max-width: 1200px;
   gap: 20px;
   display: flex;
   flex-direction: row;
@@ -71,12 +123,13 @@
   background-color: black;
   color: white;
   border-radius: 4px;
-  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+    color 0.2s ease-in-out;
   border: none;
   text-decoration: none;
 
   &:hover {
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(0, 0, 0, 0.9);
     cursor: pointer;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   }
@@ -84,19 +137,19 @@
 
 .button-secondary {
   background-color: white;
-  border: 1px solid #ECECEC;
+  border: 1px solid #ececec;
   color: #666666;
   font-weight: 400;
   &:hover {
-    background-color: rgba(0,0,0,0.08);
+    background-color: rgba(0, 0, 0, 0.08);
     box-shadow: none;
     color: black;
-    border: 1px solid #ECECEC;
+    border: 1px solid #ececec;
   }
 }
 
 .icon-gray {
-  color: rgba(0,0,0,0.2);
+  color: rgba(0, 0, 0, 0.2);
   transition: color 0.2s ease-in-out;
 }
 
@@ -130,4 +183,13 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
   }
+}
+
+.tracker-description {
+  padding: 1rem 2rem;
+  background-color: #f9f9f9;
+  color: #474747;
+  text-align: center;
+  border-radius: 12px;
+  width: 300px;
 }
