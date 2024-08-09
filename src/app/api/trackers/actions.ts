@@ -84,7 +84,7 @@ export async function editTracker(prevState: any, formData: FormData) {
   ];
   const { rows: result } = await sql.query(query2, params2);
 
-  console.log("result", result);
+  //   console.log("result", result);
 
   revalidatePath("/");
   revalidatePath("/tracker/" + formData.get("trackerId"));
@@ -113,7 +113,7 @@ export async function deleteTracker(prevState: any, formData: FormData) {
   const params = [formData.get("trackerId")];
   const { rows: result } = await sql.query(query, params);
 
-  console.log("result", result);
+  //   console.log("result", result);
 
   // validate name collision by user
   // const query = 'SELECT * FROM "Tracker" WHERE name = $1 AND userid = $2;';

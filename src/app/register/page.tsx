@@ -9,42 +9,45 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 export default async function RegisterPage() {
   const session = await getSession();
-  console.log("session", session);
+  // console.log("session", session);
 
   if (session) {
     redirect("/");
   }
 
   return (
-    <div className={styles.wrapper} >
+    <div className={styles.wrapper}>
       <main className={`${styles.main} ${styles.narrow}`}>
         <div className={styles.description}>
-          <div style={{ display: "flex", justifyContent: 'center'}}>
-            <FontAwesomeIcon icon={faHeart} style={{color: '#E26F6F', fontSize: '2rem'}}/>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <FontAwesomeIcon
+              icon={faHeart}
+              style={{ color: "#E26F6F", fontSize: "2rem" }}
+            />
           </div>
-          
 
           <h1>Trackers</h1>
-          <p className={styles.subtext}>You&apos;re making progress; track it!</p>
+          <p className={styles.subtext}>
+            You&apos;re making progress; track it!
+          </p>
         </div>
         <div
           className={`${styles.row} ${styles.content}`}
           style={{ marginTop: "24px" }}
-        >
-          </div>
-          
-    <section>
-    {!session && <RegisterComponent />}
+        ></div>
 
-      {/* {session && (
+        <section>
+          {!session && <RegisterComponent />}
+
+          {/* {session && (
         <form action={logout}>
           <button type="submit">Logout</button>
         </form>
       )} */}
 
-      {/* <pre>Session: {JSON.stringify(session, null, 2)}</pre> */}
-    </section>
-    </main>
+          {/* <pre>Session: {JSON.stringify(session, null, 2)}</pre> */}
+        </section>
+      </main>
     </div>
   );
 }

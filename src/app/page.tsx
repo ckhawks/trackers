@@ -12,7 +12,7 @@ import ProfileButton from "@/components/ProfileButton";
 
 export default async function Home() {
   const session = await getSession();
-  console.log("session", session);
+  // console.log("session", session);
 
   if (!session) {
     redirect("/login");

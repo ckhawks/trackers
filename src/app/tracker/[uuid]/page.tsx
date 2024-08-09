@@ -42,7 +42,7 @@ export default async function Tracker({
   params: { uuid: string };
 }) {
   const session = await getSession();
-  console.log("session", session);
+  // console.log("session", session);
 
   if (!session) {
     redirect("/login");
@@ -99,7 +99,7 @@ export default async function Tracker({
 
   const tracker = trackers[0];
 
-  console.log("tracker", tracker);
+  // console.log("tracker", tracker);
 
   return (
     <div className={styles.wrapper}>

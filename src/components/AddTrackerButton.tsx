@@ -20,9 +20,8 @@ function AddTrackerButton() {
 
   const [state, addTrackerAction] = useFormState(addTracker, initialState);
 
-
   useEffect(() => {
-    if(state?.state === "success") {
+    if (state?.state === "success") {
       setShow(false);
     }
   }, [state]);
@@ -34,34 +33,52 @@ function AddTrackerButton() {
       </div>
       <Modal show={show} onHide={handleClose} centered>
         <Form action={addTrackerAction}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add tracker</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+          <Modal.Header closeButton>
+            <Modal.Title>Add tracker</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
             {state?.message && (
-            <p aria-live="polite">
-              <Alert variant='danger' style={{fontSize: '0.9rem'}}>
-                {state?.message}
-              </Alert>
-            </p>
-          )}
-          <Form.Label htmlFor="tracker-name">Name</Form.Label>
-          <InputGroup className="mb-3">
-            <Form.Control id="tracker-name" name="tracker-name" aria-describedby="basic-addon3" />
-          </InputGroup>
-          <Form.Label htmlFor="tracker-description">Description</Form.Label>
-          <InputGroup>
-            <Form.Control id="tracker-description" name="tracker-description" as="textarea" />
-          </InputGroup>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" type="submit" > {/*  onClick={handleClose}*/}
-            Add
-          </Button>
-        </Modal.Footer>
+              <p aria-live="polite">
+                <Alert variant="danger" style={{ fontSize: "0.9rem" }}>
+                  {state?.message}
+                </Alert>
+              </p>
+            )}
+            <Form.Label htmlFor="tracker-name">Name</Form.Label>
+            <InputGroup className="mb-3">
+              <Form.Control
+                id="tracker-name"
+                name="tracker-name"
+                aria-describedby="basic-addon3"
+              />
+            </InputGroup>
+            <Form.Label htmlFor="tracker-description">Description</Form.Label>
+            <InputGroup>
+              <Form.Control
+                id="tracker-description"
+                name="tracker-description"
+                as="textarea"
+              />
+            </InputGroup>
+            <Form.Check // prettier-ignore
+              type={"checkbox"}
+              id={`tracker-focus`}
+              name="tracker-focus"
+              label={`Current focus`}
+              defaultChecked={true}
+              style={{ marginTop: "12px" }}
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" type="submit">
+              {" "}
+              {/*  onClick={handleClose}*/}
+              Add
+            </Button>
+          </Modal.Footer>
         </Form>
       </Modal>
     </>

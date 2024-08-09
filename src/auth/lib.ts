@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
 import { sql } from "@vercel/postgres";
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 // const query = 'SELECT * FROM "Tracker" WHERE userid = $1';
 //   const params = [userId];
@@ -47,7 +47,6 @@ async function check_password(input: string, hash: string): Promise<any> {
 }
 
 export async function register(prevState: any, formData: FormData) {
-
   // VALIDATE THE DATA CAME IN CORRECTLY IN FORMATS
   if (formData.get("username") == "") {
     return { message: "Kindly provide username. now" };
@@ -57,7 +56,10 @@ export async function register(prevState: any, formData: FormData) {
     return { message: "Kindly provide email. now" };
   }
 
-  if (formData.get("password") == "" || (formData.get("password") as string).length < 8) {
+  if (
+    formData.get("password") == "" ||
+    (formData.get("password") as string).length < 8
+  ) {
     return { message: "Kindly provide any password of 8+ characters. now" };
   }
 
@@ -87,14 +89,15 @@ export async function register(prevState: any, formData: FormData) {
     return { message: "Please username already used sorry..." };
   }
 
-  console.log("password", formData.get("password"));
-
   // store user in DB
-  const query3 = 'INSERT INTO "User" ("username", "email", "password") VALUES ($1, $2, $3)';
-  const params3 = [formData.get("username"), formData.get("email"), await hash_password(formData.get("password")?.toString() || "")];
+  const query3 =
+    'INSERT INTO "User" ("username", "email", "password") VALUES ($1, $2, $3)';
+  const params3 = [
+    formData.get("username"),
+    formData.get("email"),
+    await hash_password(formData.get("password")?.toString() || ""),
+  ];
   const { rows: userCreated } = await sql.query(query3, params3); // this returns nothing []
-
-  console.log("userCreated", userCreated)
 
   // get user
   const user = { email: formData.get("email"), name: "John" }; // get user info from database by email/password
@@ -114,12 +117,16 @@ export async function login(prevState: any, formData: FormData) {
     return { message: "Kindly provide email. now" };
   }
 
-  if (formData.get("password") == "" || (formData.get("password") as string).length < 8) {
+  if (
+    formData.get("password") == "" ||
+    (formData.get("password") as string).length < 8
+  ) {
     return { message: "Kindly provide any password of 8+ characters. now" };
   }
 
   // validate credentials
-  const query = 'SELECT id, email, username, password FROM "User" WHERE email = $1';
+  const query =
+    'SELECT id, email, username, password FROM "User" WHERE email = $1';
   const params = [formData.get("email")];
   const { rows: users } = await sql.query(query, params);
 
@@ -128,17 +135,23 @@ export async function login(prevState: any, formData: FormData) {
   }
 
   if (users.length > 1) {
-    return { message: "somehow we found multiple users with that email that wasnt supposed to happen man" };
+    return {
+      message:
+        "somehow we found multiple users with that email that wasnt supposed to happen man",
+    };
   }
- 
+
   const user = users[0]; // get user info from database by email/password
 
-  let password_valid = await check_password(formData.get("password")?.toString() || "", user.password);
+  let password_valid = await check_password(
+    formData.get("password")?.toString() || "",
+    user.password
+  );
   if (!password_valid) {
     return { message: "no users was founded with those infos sir.." };
   }
 
-  delete user['password'] // strip the password off the object
+  delete user["password"]; // strip the password off the object
 
   // Create the session
   const expires = new Date(Date.now() + 2400 * 1000);
