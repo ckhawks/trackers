@@ -35,7 +35,7 @@ const ProfileButton = (props: {username: string}) => {
                 <Popover id="popover-contained">
                     <Popover.Header as="h3">User Menu</Popover.Header>
                     <Popover.Body>
-                        <Link href="/logout"><FontAwesomeIcon icon={faArrowRightFromBracket} /> Logout</Link>
+                        <Link href="/api/logout"><FontAwesomeIcon icon={faArrowRightFromBracket} /> Logout</Link>
                     </Popover.Body>
                 </Popover>
             </Overlay>
