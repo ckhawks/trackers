@@ -8,33 +8,7 @@ import { getSession } from "@/auth/lib";
 import { sql } from "@vercel/postgres";
 import DeleteTrackerButton from "@/components/DeleteTrackerButton";
 import EditTrackerButton from "@/components/EditTrackerButton";
-
-function random_rgba() {
-  var o = Math.round,
-    r = Math.random,
-    s = 255;
-  return (
-    "rgba(" +
-    o(r() * s) +
-    "," +
-    o(r() * s) +
-    "," +
-    o(r() * s) +
-    "," +
-    r().toFixed(1) +
-    ")"
-  );
-}
-
-function getDateStringFromDate(date: Date) {
-  // const timestamp = 1616608200000; // example timestamp
-  // const date = new Date(timestamp);
-  return new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(date);
-}
+import ProgressRectangle from "@/components/ProgressRectangle";
 
 export default async function Tracker({
   params,
@@ -84,7 +58,7 @@ export default async function Tracker({
     )
     AND p."deletedat" is NULL
     AND p."trackerid" = $1
-    ORDER BY p.id DESC;
+    ORDER BY p."createdat" DESC;
   `;
   const query_params2 = [params.uuid];
   const { rows: progresses } = await sql.query(query2, query_params2);
@@ -127,39 +101,10 @@ export default async function Tracker({
         <div className={styles["progress-column"]}></div>
         {progresses &&
           progresses.map((progress) => {
-            const tooltip = (
-              <Tooltip id="tooltip" key={progress.id}>
-                <strong>
-                  {progress.points} point{progress.points != 1 && "s"}
-                </strong>
-                <br />
-                {progress.summary && (
-                  <>
-                    {progress.summary}
-                    <br />
-                  </>
-                )}
-
-                <span style={{ color: "rgba(0,0,0,.5)" }}>
-                  {getDateStringFromDate(progress.createdat)}
-                </span>
-              </Tooltip>
-            );
-
+            
             return (
-              <OverlayTrigger
-                placement="right"
-                overlay={tooltip}
-                key={progress.id}
-              >
-                <div
-                  className={styles["progress-section"]}
-                  style={{
-                    height: 20 * progress.points + "px",
-                    backgroundColor: random_rgba(),
-                  }}
-                ></div>
-              </OverlayTrigger>
+              <ProgressRectangle userId={session.user.id} progress={progress} />
+              
             );
           })}
 

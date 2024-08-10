@@ -99,8 +99,19 @@ export async function register(prevState: any, formData: FormData) {
   ];
   const { rows: userCreated } = await sql.query(query3, params3); // this returns nothing []
 
-  // get user
-  const user = { email: formData.get("email"), name: "John" }; // get user info from database by email/password
+  // get user info from database by email/password
+  const query4 = `SELECT * FROM "User" WHERE username = $1`;
+  const params4 = [
+    formData.get("username")
+  ]
+  const { rows: usersFromCreated } = await sql.query(query4, params4);
+
+  if (usersFromCreated.length != 1) {
+    return { message: "Error finding the user that was just created. Report Bad" };
+  }
+
+  const user = usersFromCreated[0];
+  delete user['password'];
 
   // Create the session
   const expires = new Date(Date.now() + 2400 * 1000);

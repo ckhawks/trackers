@@ -172,6 +172,17 @@
 
 .progress-section {
   width: 200px;
+
+  transition: transform 0.2s ease-in-out, border-radius 0.2s ease-in-out;
+  z-index: 0;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    border: 1px solid #000000;
+    z-index: 100;
+    border-radius: 4px;
+  }
 }
 
 .progress-column {
