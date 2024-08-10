@@ -103,8 +103,7 @@ export default async function Tracker({
           progresses.map((progress) => {
             
             return (
-              <ProgressRectangle userId={session.user.id} progress={progress} />
-              
+              <ProgressRectangle userId={session.user.id} progress={progress} key={progress.progressid} />
             );
           })}
 
