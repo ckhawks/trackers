@@ -10,22 +10,7 @@ const initialState = {
   message: "",
 };
 
-function random_rgba() {
-    var o = Math.round,
-      r = Math.random,
-      s = 255;
-    return (
-      "rgba(" +
-      o(r() * s) +
-      "," +
-      o(r() * s) +
-      "," +
-      o(r() * s) +
-      "," +
-      r().toFixed(1) +
-      ")"
-    );
-  }
+
 
   function getDateStringFromDate(date: Date) {
     // const timestamp = 1616608200000; // example timestamp
@@ -37,7 +22,7 @@ function random_rgba() {
     }).format(date);
   }
 
-function ProgressRectangle(props: {progress: any, userId: string}) {
+function ProgressRectangle(props: {progress: any, userId: string, color: string}) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -84,7 +69,7 @@ function ProgressRectangle(props: {progress: any, userId: string}) {
                   className={styles["progress-section"]}
                   style={{
                     height: 20 * props.progress.points + "px",
-                    backgroundColor: random_rgba(),
+                    backgroundColor: props.color,
                   }}
                   onClick={handleShow}
                 ></div>

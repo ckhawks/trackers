@@ -10,6 +10,23 @@ import DeleteTrackerButton from "@/components/DeleteTrackerButton";
 import EditTrackerButton from "@/components/EditTrackerButton";
 import ProgressRectangle from "@/components/ProgressRectangle";
 
+function random_rgba() {
+  var o = Math.round,
+    r = Math.random,
+    s = 255;
+  return (
+    "rgba(" +
+    o(r() * s) +
+    "," +
+    o(r() * s) +
+    "," +
+    o(r() * s) +
+    "," +
+    r().toFixed(1) +
+    ")"
+  );
+}
+
 export default async function Tracker({
   params,
 }: {
@@ -103,7 +120,7 @@ export default async function Tracker({
           progresses.map((progress) => {
             
             return (
-              <ProgressRectangle userId={session.user.id} progress={progress} key={progress.progressid} />
+              <ProgressRectangle color={random_rgba()} userId={session.user.id} progress={progress} key={progress.progressid} />
             );
           })}
 
