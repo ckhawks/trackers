@@ -105,6 +105,9 @@ export default async function Home() {
                 </div>
               </Link>
             ))}
+            {focusedTrackers.length == 0 && (
+              <p className={styles['subtext']}>There are no focused trackers.</p>
+            )}
           </div>
           <p style={{ marginTop: "48px" }}>Backburner</p>
           <div className={styles["tracker-cards"]}>
@@ -131,6 +134,9 @@ export default async function Home() {
                 </div>
               </Link>
             ))}
+            {focusedTrackers.length == 0 && (
+              <p className={styles['subtext']}>There are no backburner trackers.</p>
+            )}
           </div>
         </main>
       </div>
